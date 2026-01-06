@@ -32,7 +32,12 @@ class CarListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        return super().get_queryset().select_related("manufacturer").order_by("model")
+        return (
+            super()
+            .get_queryset()
+            .select_related("manufacturer")
+            .order_by("model")
+        )
 
 
 class DriverListView(LoginRequiredMixin, generic.ListView):
