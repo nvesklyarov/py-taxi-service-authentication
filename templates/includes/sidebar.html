@@ -11,7 +11,7 @@
   {% if user.is_authenticated %}
     <p>
       {% if user.driver %}
-        <a href="{% url 'taxi:driver-detail' user.driver.id %}">{{ user.username }}</a>
+        <a href="{% url 'taxi:driver-detail' user.id %}">{{ user.username }}</a>
       {% else %}
         {{ user.username }}
       {% endif %}

@@ -8,7 +8,7 @@ from .models import Driver, Car, Manufacturer
 
 @login_required
 def index(request):
-    num_visits = request.session.get("num_visits", 0)
+    num_visits = request.session.get("num_visits", 1)
     request.session["num_visits"] = num_visits + 1
 
     context = {
@@ -40,7 +40,7 @@ class DriverListView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["current_driver"] = getattr(self.request.user, "driver", None)
+        context["current_driver"] = self.request.user
         return context
 
 
