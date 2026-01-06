@@ -8,8 +8,9 @@ from .models import Driver, Car, Manufacturer
 
 @login_required
 def index(request):
-    num_visits = request.session.get("num_visits", 1)
-    request.session["num_visits"] = num_visits + 1
+    num_visits = request.session.get("num_visits", 0)
+    num_visits += 1
+    request.session["num_visits"] = num_visits
 
     context = {
         "num_visits": num_visits,
@@ -29,14 +30,18 @@ class CarListView(LoginRequiredMixin, generic.ListView):
     model = Car
     context_object_name = "car_list"
     paginate_by = 5
-    queryset = Car.objects.select_related("manufacturer").order_by("model")
+
+    def get_queryset(self):
+        return super().get_queryset().select_related("manufacturer").order_by("model")
 
 
 class DriverListView(LoginRequiredMixin, generic.ListView):
     model = Driver
     context_object_name = "driver_list"
     paginate_by = 5
-    queryset = Driver.objects.order_by("username")
+
+    def get_queryset(self):
+        return super().get_queryset().order_by("username")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -10,11 +10,7 @@
 <div class="sidebar-auth">
   {% if user.is_authenticated %}
     <p>
-      {% if user.driver %}
-        <a href="{% url 'taxi:driver-detail' user.id %}">{{ user.username }}</a>
-      {% else %}
-        {{ user.username }}
-      {% endif %}
+      <a href="{% url 'taxi:driver-detail' user.id %}">{{ user.username }}</a>
     </p>
     <form method="post" action="{% url 'logout' %}">
       {% csrf_token %}
